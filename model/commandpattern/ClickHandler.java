@@ -12,6 +12,7 @@ import model.strategypattern.RectShape;
 import model.strategypattern.TriangleShape;
 import view.gui.PaintCanvas;
 
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -74,6 +75,8 @@ public class ClickHandler extends MouseAdapter {
             }
         } else if (appState.getActiveMouseMode() == MouseMode.SELECT) {
             selectShape();
+        }else if (appState.getActiveMouseMode() == MouseMode.MOVE) {
+            moveShape();
         }
     }
 
@@ -137,6 +140,24 @@ public class ClickHandler extends MouseAdapter {
             }
             canvas.repaint();
         }
+    }
+
+    void moveShape() {
+        int dx = endPoint.getX() - startPoint.getX();
+        int dy = endPoint.getY() - startPoint.getY();
+
+
+        for (PaintShape shape : shapeList.getAllShapes()) {
+            if (shape.isSelected()) {
+                int newX = shape.getPoint().getX() + dx;
+                int newY = shape.getPoint().getY() + dy;
+                Point newTo = new Point(newX, newY);
+                MoveShapeCommand moveShapeCommand = new MoveShapeCommand(shape, newTo);
+                CommandManager.addCommand(moveShapeCommand);
+                moveShapeCommand.run();
+            }
+        }
+        canvas.repaint();
     }
 
 
