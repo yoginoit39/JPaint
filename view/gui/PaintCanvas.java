@@ -2,7 +2,7 @@ package view.gui;
 
 import model.commandpattern.PaintShape;
 import model.ShapeList;
-import util.ColorUtil;
+import model.ColorUtil;
 
 import javax.swing.JComponent;
 import java.awt.*;
