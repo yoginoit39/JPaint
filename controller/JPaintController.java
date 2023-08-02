@@ -79,7 +79,9 @@ public class JPaintController implements IJPaintController {
     }
 
     private void paste() {
-
+        ICommand pasteCommand = new PasteShapeCommand(clipboard, shapeList);
+        pasteCommand.run();
+        paintCanvas.repaint();
     }
 
     private void delete() {
