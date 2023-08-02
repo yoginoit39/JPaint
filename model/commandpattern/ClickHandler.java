@@ -5,13 +5,12 @@ package model.commandpattern;
 import model.strategypattern.Dimension;
 import model.MouseMode;
 import model.strategypattern.EllipseShape;
-import model.Point;
+import model.nullobjectpattern.Point;
 import model.ShapeList;
 import model.persistence.ApplicationState;
 import model.strategypattern.RectShape;
 import model.strategypattern.TriangleShape;
 import view.gui.PaintCanvas;
-
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -75,9 +74,10 @@ public class ClickHandler extends MouseAdapter {
             }
         } else if (appState.getActiveMouseMode() == MouseMode.SELECT) {
             selectShape();
-        }else if (appState.getActiveMouseMode() == MouseMode.MOVE) {
+        } else if (appState.getActiveMouseMode() == MouseMode.MOVE) {
             moveShape();
         }
+
     }
 
     void drawTriangle(Point point, Dimension dim) {
@@ -142,10 +142,10 @@ public class ClickHandler extends MouseAdapter {
         }
     }
 
+
     void moveShape() {
         int dx = endPoint.getX() - startPoint.getX();
         int dy = endPoint.getY() - startPoint.getY();
-
 
         for (PaintShape shape : shapeList.getAllShapes()) {
             if (shape.isSelected()) {
@@ -159,9 +159,6 @@ public class ClickHandler extends MouseAdapter {
         }
         canvas.repaint();
     }
-
-
-
 
 }
 

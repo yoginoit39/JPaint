@@ -1,6 +1,6 @@
 package model.interfaces;
 
-import model.Point;
+import model.nullobjectpattern.Point;
 
 public interface IShapeAction {
     void move(Point point);

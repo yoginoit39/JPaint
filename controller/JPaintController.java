@@ -2,12 +2,15 @@ package controller;
 
 
 import model.commandpattern.*;
+import model.singletonpattern.Clipboard;
 import model.ShapeList;
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
+
+import java.util.List;
 
 
 public class JPaintController implements IJPaintController {
@@ -18,7 +21,7 @@ public class JPaintController implements IJPaintController {
 
     private PaintCanvas paintCanvas;
 
-
+    private Clipboard clipboard = Clipboard.getInstance();
 
 
 
@@ -66,17 +69,33 @@ public class JPaintController implements IJPaintController {
         uiModule.changeCursor(applicationState.getActiveMouseMode());
     }
 
-    private void copy() {
+    private void copy() throws CloneNotSupportedException {
+        List<PaintShape> selectedShapes = shapeList.getSelectedShapes();
+        if (selectedShapes != null) {
+            ICommand copyCommand = new CopyShapeCommand(shapeList, selectedShapes, clipboard);
+            copyCommand.run();
+            System.out.println("copy");
+        }
     }
 
     private void paste() {
+         ICommand pasteCommand = new PasteShapeCommand(clipboard, shapeList);
+         pasteCommand.run();
+         paintCanvas.repaint();
     }
 
     private void delete() {
-
+        List<PaintShape> selectedShapes = shapeList.getSelectedShapes();
+        if (selectedShapes.size() >= 1) {
+            ICommand deleteCommand = new DeleteCommand(selectedShapes, shapeList);
+            deleteCommand.run();
+            System.out.println("delete");
+            paintCanvas.repaint();
+        }
     }
 
     private void group() {
+
     }
 
     private void ungroup() {

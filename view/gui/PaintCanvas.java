@@ -2,7 +2,7 @@ package view.gui;
 
 import model.commandpattern.PaintShape;
 import model.ShapeList;
-import model.ColorUtil;
+import util.ColorUtil;
 
 import javax.swing.JComponent;
 import java.awt.*;
@@ -20,8 +20,16 @@ public class PaintCanvas extends JComponent {
         Graphics2D graphics2d = (Graphics2D) g;
         for (PaintShape shape : shapeList.getAllShapes()) {
             drawGraphic(graphics2d, shape);
+
+            if (shape.isSelected()) {
+                Graphics2D stroked2D = (Graphics2D) g;
+                stroked2D.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0));
+                graphics2d.setColor(Color.BLACK);
+                graphics2d.draw(shape.getShapeBorderWhenSelected());
+            }
         }
     }
+
 
     private void drawGraphic(Graphics2D graphics2d, PaintShape shape) {
         Color primaryColor = ColorUtil.colorFrom(shape.getPrimaryColor());
@@ -46,7 +54,5 @@ public class PaintCanvas extends JComponent {
                 break;
         }
     }
-
-
 }
 

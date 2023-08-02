@@ -2,7 +2,7 @@ package model.commandpattern;
 
 import model.interfaces.IShapeAction;
 import model.strategypattern.Dimension;
-import model.Point;
+import model.nullobjectpattern.Point;
 import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
@@ -80,7 +80,7 @@ public class PaintShape implements IShapeAction, Cloneable{
 
     @Override
     public void move(Point point) {
-
+        this.point = point;
     }
 
     @Override

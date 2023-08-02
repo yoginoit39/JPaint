@@ -1,7 +1,5 @@
 package model.strategypattern;
 
-import model.interfaces.DimensionVerifyStrategy;
-
 public class Dimension {
 
     private int width;
