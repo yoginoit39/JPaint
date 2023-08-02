@@ -79,19 +79,11 @@ public class JPaintController implements IJPaintController {
     }
 
     private void paste() {
-         ICommand pasteCommand = new PasteShapeCommand(clipboard, shapeList);
-         pasteCommand.run();
-         paintCanvas.repaint();
+
     }
 
     private void delete() {
-        List<PaintShape> selectedShapes = shapeList.getSelectedShapes();
-        if (selectedShapes.size() >= 1) {
-            ICommand deleteCommand = new DeleteCommand(selectedShapes, shapeList);
-            deleteCommand.run();
-            System.out.println("delete");
-            paintCanvas.repaint();
-        }
+
     }
 
     private void group() {
