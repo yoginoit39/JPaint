@@ -1,7 +1,5 @@
-package model.commandpattern;
+package model.strategypattern;
 
-import model.interfaces.IShapeAction;
-import model.strategypattern.Dimension;
 import model.nullobjectpattern.Point;
 import model.ShapeColor;
 import model.ShapeShadingType;

@@ -1,4 +1,4 @@
-package model.interfaces;
+package model.strategypattern;
 
 import model.nullobjectpattern.Point;
 

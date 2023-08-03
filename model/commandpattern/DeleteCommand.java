@@ -4,6 +4,7 @@ package model.commandpattern;
 import model.ShapeList;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
+import model.strategypattern.PaintShape;
 
 import java.util.ArrayList;
 import java.util.List;

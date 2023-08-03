@@ -6,6 +6,7 @@ import model.ShapeList;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
 import model.strategypattern.Dimension;
+import model.strategypattern.PaintShape;
 
 import java.util.List;
 

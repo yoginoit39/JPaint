@@ -2,14 +2,11 @@ package model.commandpattern;
 
 
 
-import model.strategypattern.Dimension;
+import model.strategypattern.*;
 import model.MouseMode;
-import model.strategypattern.EllipseShape;
 import model.nullobjectpattern.Point;
 import model.ShapeList;
 import model.persistence.ApplicationState;
-import model.strategypattern.RectShape;
-import model.strategypattern.TriangleShape;
 import view.gui.PaintCanvas;
 
 import java.awt.event.MouseAdapter;

@@ -4,7 +4,7 @@ import model.ShapeColor;
 import model.ShapeShadingType;
 import model.ShapeType;
 import model.MouseMode;
-import model.commandpattern.PaintShape;
+import model.strategypattern.PaintShape;
 
 public interface IApplicationState {
     void setActiveShape();

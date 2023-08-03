@@ -8,7 +8,7 @@ import model.MouseMode;
 import model.dialogs.DialogProvider;
 import model.interfaces.IApplicationState;
 import model.interfaces.IDialogProvider;
-import model.commandpattern.PaintShape;
+import model.strategypattern.PaintShape;
 import view.interfaces.IUiModule;
 
 public class ApplicationState implements IApplicationState {

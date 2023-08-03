@@ -1,6 +1,6 @@
 package model.singletonpattern;
 
-import model.commandpattern.PaintShape;
+import model.strategypattern.PaintShape;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,6 @@
 package model.strategypattern;
 
 import model.nullobjectpattern.Point;
-import model.commandpattern.PaintShape;
-import model.interfaces.IShapeAction;
 import model.persistence.ApplicationState;
 
 import java.awt.geom.Ellipse2D;

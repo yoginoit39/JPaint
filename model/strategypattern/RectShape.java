@@ -1,7 +1,6 @@
 package model.strategypattern;
 
 import model.nullobjectpattern.Point;
-import model.commandpattern.PaintShape;
 import model.persistence.ApplicationState;
 
 import java.awt.*;

@@ -1,6 +1,6 @@
 package view.gui;
 
-import model.commandpattern.PaintShape;
+import model.strategypattern.PaintShape;
 import model.ShapeList;
 import model.ColorUtil;
 

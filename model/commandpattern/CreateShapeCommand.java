@@ -53,6 +53,7 @@ package model.commandpattern;
 import model.ShapeList;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
+import model.strategypattern.PaintShape;
 
 public class CreateShapeCommand implements ICommand, IUndoable {
 

@@ -6,6 +6,7 @@ import model.singletonpattern.Clipboard;
 import model.ShapeList;
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
+import model.strategypattern.PaintShape;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;

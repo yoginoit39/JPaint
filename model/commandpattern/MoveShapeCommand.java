@@ -3,6 +3,7 @@ package model.commandpattern;
 import model.nullobjectpattern.Point;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
+import model.strategypattern.PaintShape;
 
 public class MoveShapeCommand implements ICommand, IUndoable {
 
