@@ -1,6 +1,8 @@
 package controller;
 
 
+
+
 import model.commandpattern.*;
 import model.persistence.ApplicationState;
 import model.singletonpattern.Clipboard;
@@ -10,12 +12,16 @@ import model.interfaces.ICommand;
 import model.strategypattern.DimensionVerifyStrategy;
 import model.strategypattern.PaintShape;
 import model.compositePattern.ShapeGroup;
+import model.strategypattern.SimpleDimensionVerifyStrategy;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class JPaintController implements IJPaintController {
@@ -24,11 +30,16 @@ public class JPaintController implements IJPaintController {
     private final ShapeList shapeList;
     private final CommandManager commandManager;
 
+
     private PaintCanvas paintCanvas;
+
 
     private Clipboard clipboard = Clipboard.getInstance();
 
-    private DimensionVerifyStrategy strategy;
+
+
+
+
 
     public JPaintController(IUiModule uiModule, IApplicationState applicationState, ShapeList shapeList, PaintCanvas paintCanvas) {
         this.uiModule = uiModule;
@@ -37,8 +48,10 @@ public class JPaintController implements IJPaintController {
         this.commandManager = new CommandManager();
         this.paintCanvas = paintCanvas;
 
+
         setupEvents();
     }
+
 
     private void setupEvents() {
         uiModule.addEvent(EventName.CHOOSE_SHAPE, applicationState::setActiveShape);
@@ -55,24 +68,28 @@ public class JPaintController implements IJPaintController {
         uiModule.addEvent(EventName.UNGROUP, this::ungroup);
     }
 
+
     private void undo() {
         ICommand undoCommand = new UndoCommand();
         undoCommand.run();
-            System.out.println("undo");
+        System.out.println("undo");
         paintCanvas.repaint();
     }
 
+
     private void redo() {
-      ICommand redoCommand = new RedoCommand();
-      redoCommand.run();
+        ICommand redoCommand = new RedoCommand();
+        redoCommand.run();
         System.out.println("redo");
         paintCanvas.repaint();
     }
+
 
     private void changeMouseType() {
         applicationState.setActiveStartAndEndPointMode();
         uiModule.changeCursor(applicationState.getActiveMouseMode());
     }
+
 
     private void copy() throws CloneNotSupportedException {
         List<PaintShape> selectedShapes = shapeList.getSelectedShapes();
@@ -83,11 +100,13 @@ public class JPaintController implements IJPaintController {
         }
     }
 
+
     private void paste() {
         ICommand pasteCommand = new PasteShapeCommand(clipboard, shapeList);
         pasteCommand.run();
         paintCanvas.repaint();
     }
+
 
     private void delete() {
         List<PaintShape> selectedShapes = shapeList.getSelectedShapes();
@@ -99,6 +118,7 @@ public class JPaintController implements IJPaintController {
         }
     }
 
+
     private void group() {
         List<PaintShape> selectedShapes = new ArrayList<>();
         for (PaintShape shape : shapeList.getAllShapes()) {
@@ -107,13 +127,22 @@ public class JPaintController implements IJPaintController {
             }
         }
 
+
+// if (selectedShapes.size() > 1) {
+// ShapeGroup group = new ShapeGroup(shapeList, (ApplicationState) applicationState);
+// ICommand groupCommand = new GroupCommand(shapeList, group);
+// groupCommand.run();
+// paintCanvas.repaint();
+// }
         if (selectedShapes.size() > 1) {
+            DimensionVerifyStrategy strategy = new SimpleDimensionVerifyStrategy(); // This is just an example. Replace with your real strategy class.
             ShapeGroup group = new ShapeGroup(shapeList, (ApplicationState) applicationState, strategy);
             ICommand groupCommand = new GroupCommand(shapeList, group);
             groupCommand.run();
             paintCanvas.repaint();
         }
     }
+
 
     private void ungroup() {
         try {
