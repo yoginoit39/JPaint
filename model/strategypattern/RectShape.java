@@ -1,11 +1,12 @@
 package model.strategypattern;
 
+import model.compositePattern.ShapeComponent;
 import model.nullobjectpattern.Point;
 import model.persistence.ApplicationState;
 
 import java.awt.*;
 
-public class RectShape extends PaintShape implements Cloneable{
+public class RectShape extends PaintShape  implements IShapeAction, ShapeComponent {
     public RectShape(Point point, Dimension dimension, ApplicationState applicationState) {
         super(point, dimension, applicationState);
         super.shape = new Rectangle(point.getX(),point.getY(), dimension.getWidth(), dimension.getHeight());
@@ -19,12 +20,5 @@ public class RectShape extends PaintShape implements Cloneable{
         super.move(point);
     }
 
-    @Override
-    public RectShape clone() {
-        try {
-            return (RectShape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
+
 }

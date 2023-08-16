@@ -1,26 +1,24 @@
-package model.strategypattern;
+package model.compositePattern;
 
-
-import model.ProxyPattern.IShape;
 import model.ShapeColor;
 import model.ShapeList;
 import model.ShapeShadingType;
-import model.strategypattern.PaintShape;
+import model.strategypattern.DimensionVerifyStrategy;
 import model.nullobjectpattern.Point;
 import model.persistence.ApplicationState;
 import model.strategypattern.Dimension;
-import model.strategypattern.DimensionVerifyStrategy;
+import model.strategypattern.PaintShape;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapeGroup extends PaintShape implements Cloneable {
-
+public class ShapeGroup extends PaintShape implements Cloneable, ShapeComponent {
+    private DimensionVerifyStrategy strategy;
     List<PaintShape> groupedShaped = new ArrayList<>();
-
-
-    public ShapeGroup(ShapeList shapes,  ApplicationState applicationState) {
+    private List<ShapeComponent> components = new ArrayList<>();
+    public ShapeGroup(ShapeList shapes,  ApplicationState applicationState, DimensionVerifyStrategy strategy) {
         super(null, null, applicationState);
+        this.strategy = strategy;
 
         // Get the list of selected shapes
         List<PaintShape> selectedShapes = new ArrayList<>();
@@ -35,12 +33,13 @@ public class ShapeGroup extends PaintShape implements Cloneable {
         }
 
         Point point = new Point(0,0);
-        Dimension dimension = new Dimension(0,0);
+////        Dimension dimension = new Dimension(0,0);
+        Dimension dimension = new Dimension(0, 0, this.strategy);
 
         // get the top left point of the group
         if (selectedShapes.size() > 0) {
             point = new Point(selectedShapes.get(0).getPoint().getX(), selectedShapes.get(0).getPoint().getY());
-            dimension = new Dimension(selectedShapes.get(0).getDimension().getWidth(), selectedShapes.get(0).getDimension().getHeight());
+//            dimension = new Dimension(selectedShapes.get(0).getDimension().getWidth(), selectedShapes.get(0).getDimension().getHeight());
         }
         for (PaintShape shape : selectedShapes) {
             if (shape.getPoint().getX() < point.getX()) {
@@ -62,7 +61,7 @@ public class ShapeGroup extends PaintShape implements Cloneable {
                 maxY = shape.getPoint().getY() + shape.getDimension().getHeight();
             }
         }
-
+        dimension = new Dimension(maxX - point.getX(), maxY - point.getY());
         dimension.setWidth(maxX - point.getX());
         dimension.setHeight(maxY - point.getY());
 
@@ -71,9 +70,7 @@ public class ShapeGroup extends PaintShape implements Cloneable {
         super.setShadingType(ShapeShadingType.OUTLINE);
         super.setSecondaryColor(ShapeColor.DARK_GRAY);
         super.setPrimaryColor(ShapeColor.DARK_GRAY);
-
         super.setSelected(true);
-
         super.shape = new Rectangle(point.getX(),point.getY(), dimension.getWidth(), dimension.getHeight());
         super.shapeBorderWhenSelected = new Rectangle(point.getX() - SELECT_PADDING,point.getY() - SELECT_PADDING, dimension.getWidth() + SELECT_PADDING * 2, dimension.getHeight() + SELECT_PADDING * 2);
     }
@@ -119,16 +116,6 @@ public class ShapeGroup extends PaintShape implements Cloneable {
     }
 
 
-
-    public void add(PaintShape shape) {
-        this.groupedShaped.add(shape);
-    }
-
-    public void remove(PaintShape shape) {
-        this.groupedShaped.remove(shape);
-    }
-
-
     @Override
     public String toString() {
         return "ShapeGroup{" +
@@ -136,6 +123,4 @@ public class ShapeGroup extends PaintShape implements Cloneable {
                 '}';
     }
 
-
 }
-

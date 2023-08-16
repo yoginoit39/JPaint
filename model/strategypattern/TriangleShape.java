@@ -1,11 +1,12 @@
 package model.strategypattern;
 
+import model.compositePattern.ShapeComponent;
 import model.nullobjectpattern.Point;
 import model.persistence.ApplicationState;
 
 import java.awt.*;
 
-public class TriangleShape extends PaintShape implements IShapeAction, Cloneable {
+public class TriangleShape extends PaintShape implements IShapeAction, ShapeComponent {
     public TriangleShape(Point point, Dimension dimension, ApplicationState applicationState) {
         super(point, dimension, applicationState);
         Polygon triangle = new Polygon();
@@ -43,12 +44,5 @@ public class TriangleShape extends PaintShape implements IShapeAction, Cloneable
         super.move(point);
     }
 
-    @Override
-    public TriangleShape clone() {
-        try {
-            return (TriangleShape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
+
 }

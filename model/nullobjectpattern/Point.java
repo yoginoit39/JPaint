@@ -2,8 +2,8 @@ package model.nullobjectpattern;
 
 public class Point  implements PointInterface {
 
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public Point(int x, int y) {
         this.x = x;
@@ -11,6 +11,13 @@ public class Point  implements PointInterface {
     }
 
     public Point() {
+    }
+
+    public static PointInterface createPoint(int x, int y) {
+        if (x == 0 && y == 0) {
+            return new NullPoint(); // Return NullPoint for (0, 0)
+        }
+        return new Point(x, y);
     }
 
     public int getX() {

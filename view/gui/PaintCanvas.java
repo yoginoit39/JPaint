@@ -1,8 +1,10 @@
 package view.gui;
 
+import model.persistence.ApplicationState;
 import model.strategypattern.PaintShape;
 import model.ShapeList;
 import model.ColorUtil;
+import model.compositePattern.ShapeGroup;
 
 import javax.swing.JComponent;
 import java.awt.*;
@@ -18,8 +20,15 @@ public class PaintCanvas extends JComponent {
     @Override
     public void paint(Graphics g) {
         Graphics2D graphics2d = (Graphics2D) g;
-        for (PaintShape shape : shapeList.getAllShapes()) {
-            drawGraphic(graphics2d, shape);
+        for (PaintShape shape : shapeList.getAllShapes()){
+            System.out.println(shape.getClass().getSimpleName());
+            // if shape is a group, draw all shapes in the group
+            if (shape.getClass().getSimpleName().equals("ShapeGroup")) {
+                ShapeGroup shapeGroup = (ShapeGroup) shape;
+                drawGroupRecursive(graphics2d, shapeGroup);
+            } else {
+                drawGraphic(graphics2d, shape);
+            }
 
             if (shape.isSelected()) {
                 Graphics2D stroked2D = (Graphics2D) g;
@@ -31,11 +40,25 @@ public class PaintCanvas extends JComponent {
     }
 
 
+    private void drawGroupRecursive(Graphics2D graphics2d, ShapeGroup shapeGroup) {
+        for (PaintShape shape : shapeGroup.getGroupedShaped()) {
+            if (shape.getClass().getSimpleName().equals("ShapeGroup")) {
+                ShapeGroup shapeGroup1 = (ShapeGroup) shape;
+                drawGroupRecursive(graphics2d, shapeGroup1);
+            } else {
+                drawGraphic(graphics2d, shape);
+            }
+        }
+    }
+
+
+
     private void drawGraphic(Graphics2D graphics2d, PaintShape shape) {
         Color primaryColor = ColorUtil.colorFrom(shape.getPrimaryColor());
         Color secondaryColor = ColorUtil.colorFrom(shape.getSecondaryColor());
 
         switch (shape.getShadingType()) {
+
             case FILLED_IN:
                 graphics2d.setColor(primaryColor);
                 graphics2d.fill(shape.getShape());
@@ -54,5 +77,8 @@ public class PaintCanvas extends JComponent {
                 break;
         }
     }
-}
 
+    public void setAppState(ApplicationState appState) {
+
+    }
+}

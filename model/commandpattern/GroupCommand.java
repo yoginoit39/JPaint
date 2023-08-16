@@ -1,10 +1,10 @@
 package model.commandpattern;
 
 import model.ShapeList;
+import model.strategypattern.PaintShape;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
-import model.strategypattern.PaintShape;
-import model.strategypattern.ShapeGroup;
+import model.compositePattern.ShapeGroup;
 
 public class GroupCommand implements ICommand, IUndoable {
     private ShapeList shapeList;

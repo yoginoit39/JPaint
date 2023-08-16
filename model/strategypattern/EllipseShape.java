@@ -1,11 +1,12 @@
 package model.strategypattern;
 
+import model.compositePattern.ShapeComponent;
 import model.nullobjectpattern.Point;
 import model.persistence.ApplicationState;
 
 import java.awt.geom.Ellipse2D;
 
-public class EllipseShape extends PaintShape implements IShapeAction, Cloneable{
+public class EllipseShape extends PaintShape implements IShapeAction, ShapeComponent {
     public EllipseShape(Point point, Dimension dimension, ApplicationState applicationState) {
         super(point, dimension, applicationState);
         super.shape = new Ellipse2D.Double(point.getX(), point.getY(), dimension.getWidth(), dimension.getHeight());
@@ -19,12 +20,4 @@ public class EllipseShape extends PaintShape implements IShapeAction, Cloneable{
         super.move(point);
     }
 
-    @Override
-    public EllipseShape clone() {
-        try {
-            return (EllipseShape) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
-    }
 }

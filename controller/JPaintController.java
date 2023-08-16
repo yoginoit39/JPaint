@@ -7,8 +7,9 @@ import model.singletonpattern.Clipboard;
 import model.ShapeList;
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
+import model.strategypattern.DimensionVerifyStrategy;
 import model.strategypattern.PaintShape;
-import model.strategypattern.ShapeGroup;
+import model.compositePattern.ShapeGroup;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
@@ -27,7 +28,7 @@ public class JPaintController implements IJPaintController {
 
     private Clipboard clipboard = Clipboard.getInstance();
 
-
+    private DimensionVerifyStrategy strategy;
 
     public JPaintController(IUiModule uiModule, IApplicationState applicationState, ShapeList shapeList, PaintCanvas paintCanvas) {
         this.uiModule = uiModule;
@@ -107,7 +108,7 @@ public class JPaintController implements IJPaintController {
         }
 
         if (selectedShapes.size() > 1) {
-            ShapeGroup group = new ShapeGroup(shapeList, (ApplicationState) applicationState);
+            ShapeGroup group = new ShapeGroup(shapeList, (ApplicationState) applicationState, strategy);
             ICommand groupCommand = new GroupCommand(shapeList, group);
             groupCommand.run();
             paintCanvas.repaint();

@@ -1,5 +1,6 @@
 package model.strategypattern;
 
+import model.compositePattern.ShapeComponent;
 import model.nullobjectpattern.Point;
 import model.ShapeColor;
 import model.ShapeShadingType;
@@ -9,7 +10,7 @@ import model.persistence.ApplicationState;
 import java.awt.*;
 import java.util.Objects;
 
-public class PaintShape implements IShapeAction, Cloneable{
+public class PaintShape implements IShapeAction, Cloneable, ShapeComponent {
     protected Shape shape;
     protected Shape shapeBorderWhenSelected;
     private ShapeType shapeType;
@@ -130,5 +131,6 @@ public class PaintShape implements IShapeAction, Cloneable{
     public Point borderBottomLeft() {
         return new Point(point.getX() - BOUND_PADDING, point.getY() + dimension.getHeight() + BOUND_PADDING);
     }
+
 
 }
