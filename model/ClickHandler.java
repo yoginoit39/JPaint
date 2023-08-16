@@ -1,10 +1,5 @@
 package model;
 
-
-
-
-
-
 import model.commandpattern.CommandManager;
 import model.commandpattern.CreateShapeCommand;
 import model.commandpattern.MoveShapeCommand;
@@ -16,28 +11,17 @@ import model.nullobjectpattern.Point;
 import model.ShapeList;
 import model.persistence.ApplicationState;
 import view.gui.PaintCanvas;
-
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
-
-
-
 
 public class ClickHandler extends MouseAdapter {
     private PointInterface startPoint = new NullPoint();
     private PointInterface endPoint = new NullPoint();
     // private final Point startPoint = new Point();
-// private final Point endPoint = new Point();
+    // private final Point endPoint = new Point();
     private final PaintCanvas canvas; // reference to paintCanvas object
     private final ShapeList shapeList;
-
-
     private ApplicationState appState;
-
-
 
 
     public ClickHandler(PaintCanvas canvas, ShapeList shapeList, ApplicationState appState) {
@@ -46,22 +30,19 @@ public class ClickHandler extends MouseAdapter {
         this.appState = appState;
     }
 
-
     @Override
     public void mousePressed(MouseEvent e) {
         startPoint = Point.createPoint(e.getX(), e.getY());
-// startPoint.setX(e.getX());
-// startPoint.setY(e.getY());
+    // startPoint.setX(e.getX());
+    // startPoint.setY(e.getY());
     }
 
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
-
         endPoint = Point.createPoint(e.getX(), e.getY());
-// endPoint.setX(e.getX());
-// endPoint.setY(e.getY());
+        // endPoint.setX(e.getX());
+        // endPoint.setY(e.getY());
 
 
         int x = Math.min(startPoint.getX(), endPoint.getX());
@@ -69,24 +50,17 @@ public class ClickHandler extends MouseAdapter {
         int width = Math.abs(startPoint.getX() - endPoint.getX());
         int height = Math.abs(startPoint.getY() - endPoint.getY());
 
-
-
-
         Point point = new Point(x, y);
-
 
         DimensionVerifyStrategy strategy = new SimpleDimensionVerifyStrategy();
         Dimension dim = new Dimension(width, height, strategy);
-// Point from = new Point(startPoint.getX(), startPoint.getY());
-
+        // Point from = new Point(startPoint.getX(), startPoint.getY());
 
         int distance = (int) Math.sqrt(Math.pow((startPoint.getX() - endPoint.getX()), 2) +
                 Math.pow((startPoint.getY() - endPoint.getY()), 2));
 
 
-
-
-// check mouse mode
+        // check mouse mode
         if (appState.getActiveMouseMode() == MouseMode.DRAW && distance > 0) {
             PaintShape newShape;
             switch (appState.getActiveShapeType()) {
@@ -175,8 +149,6 @@ public class ClickHandler extends MouseAdapter {
             canvas.repaint();
         }
     }
-
-
 
 
     void moveShape() {
