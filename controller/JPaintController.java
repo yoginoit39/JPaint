@@ -2,15 +2,18 @@ package controller;
 
 
 import model.commandpattern.*;
+import model.persistence.ApplicationState;
 import model.singletonpattern.Clipboard;
 import model.ShapeList;
 import model.interfaces.IApplicationState;
 import model.interfaces.ICommand;
 import model.strategypattern.PaintShape;
+import model.strategypattern.ShapeGroup;
 import view.EventName;
 import view.gui.PaintCanvas;
 import view.interfaces.IUiModule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -96,9 +99,32 @@ public class JPaintController implements IJPaintController {
     }
 
     private void group() {
+        List<PaintShape> selectedShapes = new ArrayList<>();
+        for (PaintShape shape : shapeList.getAllShapes()) {
+            if (shape.isSelected()) {
+                selectedShapes.add(shape);
+            }
+        }
 
+        if (selectedShapes.size() > 1) {
+            ShapeGroup group = new ShapeGroup(shapeList, (ApplicationState) applicationState);
+            ICommand groupCommand = new GroupCommand(shapeList, group);
+            groupCommand.run();
+            paintCanvas.repaint();
+        }
     }
 
     private void ungroup() {
+        try {
+            PaintShape selectedShape = applicationState.getSelectedShape();
+            if (selectedShape instanceof ShapeGroup) {
+                ICommand ungroupCommand = new UngroupCommand(shapeList, (ShapeGroup) selectedShape);
+                ungroupCommand.run();
+                System.out.println("ungroup");
+                paintCanvas.repaint();
+            }
+        } catch (Exception e) {
+            System.out.println("No group selected");
+        }
     }
 }
