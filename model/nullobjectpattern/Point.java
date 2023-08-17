@@ -4,8 +4,8 @@ package model.nullobjectpattern;
 public class Point implements PointInterface {
 
 
-    public int x;
-    public int y;
+    private int x;
+    private int y;
 
 
     public Point(int x, int y) {
