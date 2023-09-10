@@ -18,26 +18,13 @@ public class Main {
     public static void main(String[] args) {
         ShapeList shapeList = new ShapeList();
         PaintCanvas paintCanvas = new PaintCanvas(shapeList);
-
-
-
-
-
-
-
-
         IGuiWindow guiWindow = new GuiWindow(paintCanvas, shapeList);
         IUiModule uiModule = new Gui(guiWindow);
 
-
         ApplicationState appState = new ApplicationState(uiModule);
-
-
-
 
         new JPaintController(uiModule, appState, shapeList, paintCanvas);
         paintCanvas.setAppState(appState);
-
 
         ClickHandler clickHandler = new ClickHandler(paintCanvas, shapeList, appState);
         paintCanvas.addMouseListener(clickHandler);
